@@ -1,0 +1,415 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}     % Use T1 font encoding for Polish characters
+\usepackage[polish]{babel}   % Load the Polish language
+\usepackage{geometry}
+\usepackage{amsthm}  % For theorem-like environments
+\usepackage{lipsum}  
+\usepackage{fancyhdr}
+\usepackage{cmbright}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{placeins}
+ 
+\newtheorem{definition}{Definition}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ bottom=30mm,          % Bottom margin to ensure footer visibility
+ footskip=15mm  
+ }
+
+
+ \title{Wyznaczanie stałej siatki dyfrakcyjnej}
+\author{Seweryn Wasilewski}
+\date{Listopad 2024}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  %\fancyfoot[R]{\includegraphics[width=2cm]{PP_logo.png}}
+  \fancyfoot[L]{\today}
+  \fancyfoot[R]{\thepage}
+  \fancyhead[L]{ Pracownia Fizyczna I }
+  \fancyhead[R]{\theauthor}
+}
+
+\pagestyle{fancy}
+\pagestyle{plain}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\begin{document}
+
+\maketitle
+
+\noindent\begin{tabular}{@{}ll}
+    Student & \theauthor\\
+    Nr Albumu &  160128\\
+    Kierunek & Inforamtyka\\
+    Wydział & Wydział Informatyki i Teleinforamtyki\\
+    Ćwiczenie & 303\\
+\end{tabular}
+
+\section*{Wstęp Teoretyczny}
+
+\paragraph{Falowy charakter światła} wiąże się z tym, że światło zachowuje się jak fala elektromagnetyczna, co przejawia się w zjawiskach takich jak interferencja, dyfrakcja i polaryzacja. Oznacza to, że światło przenosi energię w postaci drgań pola elektrycznego i magnetycznego, które rozchodzą się w przestrzeni.
+
+\paragraph{Zasada Huyghensa} tłumaczy rozchodzenie się fali: każdy punkt na fali działa jak nowe źródło fal kulistych. Suma tych „falelek” tworzy nowy kształt fali i wyjaśnia, jak światło omija przeszkody i tworzy obraz np. na ekranie.
+ 
+\paragraph{Interferencaja}
+Interferencja to nakładanie się fal prowadzące do wzmocnienia lub osłabienia w zależności od ich fazy:
+\begin{itemize}
+    \item \textbf{Wzmocnienie} (maksimum) następuje, gdy fale są zgodne w fazie – ich różnica drogi jest wielokrotnością długości fali.
+    \item \textbf{Osłabienie} (minimum) występuje, gdy fale są w przeciwfazie – różnica drogi wynosi niecałkowitą wielokrotność długości fali.
+\end{itemize}
+
+
+\paragraph{Spójność (koherencja)}opisuje zdolność fal do trwałego tworzenia wzoru interferencyjnego. Fale koherentne mają stałą różnicę faz, co umożliwia przewidywalny obraz interferencyjny.
+
+\paragraph{Dyfrakcja na pojedynczej szczelinie} Zjawisko to polega na ugięciu fali, które staje się zauważalne, gdy fala przechodzi przez szczelinę w przeszkodzie o rozmiarach zbliżonych do długości fali. Jego istotę ilustruje rysunek (\ref{fig:rys1}). Charakterystyka fali po przejściu przez szczelinę zależy od relacji między szerokością szczeliny a długością fali światła.
+
+Obraz dyfrakcyjny na ekranie za szczeliną zazwyczaj składa się z naprzemiennych prążków jasnych i ciemnych, co wynika z nakładania się fal elementarnych emitowanych z różnych części szczeliny. Najaśniejszy punkt, czyli centralne maksimum, znajduje się w przedłużeniu kierunku fal padających (dla kąta $\upsilon=0$). Położenia kolejnych ciemnych prążków, będących minimami dyfrakcyjnymi, określa odpowiedni wzór.
+
+\begin{equation}
+    a \cdot sin(\upsilon) = m \lambda
+\end{equation}
+
+Maksima oświetlenia pojawiają się mniej więcej w połowie odległości między sąsiednimi minimami, a szerokość maksimum centralnego zależy od położenia pierwszego minimum (m=1). Dla szerokich szczelin ($a>>\lambda$) pierwsze minimum występuje przy małym kącie, co sprawia, że centralne maksimum jest wąskie i odzwierciedla kształt szczeliny. Gdy szerokość szczeliny równa się długości fali, pierwsze minimum pojawia się przy kącie 90°, a centralne maksimum obejmuje całą przestrzeń za szczeliną, dając wrażenie jednorodnego oświetlenia, jeśli ekran nie jest zbyt duży.
+
+\begin{figure}
+    \centering
+    \includegraphics[width= 0.75\linewidth]{Zrzut ekranu 2024-11-17 163539.jpg}
+    \caption{Przechodzenie światła przez otowry o różnch wielkościach. Źródło:  Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 175  Rys. 43.1.}
+    \label{fig:rys1}
+\end{figure}
+
+\FloatBarrier
+
+\paragraph{Dwie szczeliny} Obraz uzyskany na ekranie podczas przechodzenia światła przez dwie szczeliny (rys. 2) powstaje w wyniku jednoczesnego działania dwóch zjawisk: dyfrakcji światła na każdej szczelinie oraz interferencji fal pochodzących z sąsiednich szczelin. Maksima interferencyjne pojawiają się w miejscach, gdzie różnica dróg $\Delta S$ jest wielokrotnością długości fali. Z rysunku wynika, że $\Delta S = d \cdot sin(\upsilon)$, co pozwala określić położenie maksimów interferencyjnych za pomocą wzoru: 
+
+\begin{equation}
+    d \cdot sin \upsilon = m \lambda, m = 1, 2, 3
+\end{equation}
+
+Kątowa odległość między prążkami interferencyjnymi zależy od stosunku d, czyli odległości między środkami szczelin. Natężenie tych prążków jest modulowane przez obraz dyfrakcyjny pojedynczej szczeliny i zależy od stosunku a, gdzie a to szerokość szczeliny. Innymi słowy, intensywność prążków interferencyjnych jest kształtowana przez dyfrakcyjną obwiednię. Przy bardzo wąskich szczelinach obraz dyfrakcyjny staje się szeroki, co powoduje, że wszystkie prążki interferencyjne mają zbliżone natężenie, a na ekranie widoczny jest wyłącznie obraz interferencyjny.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.30\linewidth]{Zrzut ekranu 2024-11-17 164839.jpg}
+    \caption{Dyfrakcja na pojedynczej szczelinie. Źródło:  Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 175  Rys. 43.2}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.30\linewidth]{Zrzut ekranu 2024-11-17 164851.jpg}
+    \caption{Dyfrakcja na dwóch szczelinach. Źródło:  Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 175  Rys. 43.3 }
+    \label{fig:enter-label}
+\end{figure}
+
+
+\paragraph{Siatka dydfakcyjna konstrukcja} składa się z wielu równoległych szczelin, które wzmacniają interferencję:
+
+\begin{itemize}
+    \item  \textbf{Szerokość maksimów głównych} maleje wraz ze wzrostem liczby szczelin, co sprawia, że maksimów jest więcej, ale są węższe.
+    \item \textbf{Zdolność rozdzielcza siatki}, czyli jej zdolność do rozróżniania blisko położonych długości fal, wzrasta wraz z liczbą szczelin.
+\end{itemize}
+\FloatBarrier
+\paragraph{Stała siatki dyfrakcyjnej d} jest odległością między środkami sąsiednich szczelin. W celu wyznaczenia tej stałej zastosowany zostanie wzór: 
+
+\begin{equation}
+    d = \frac{m \lambda}{sin(\alpha)}
+\end{equation}
+
+, gdzie: 
+$m$ - numer kolejnego prążka od prążka zerowego
+
+$\lambda$ - długość fali danego światła
+
+$\alpha$ - kąt ugięcia dla m-tego prążka
+
+\paragraph{Spektometr}to przyrząd do badania długości fal światła lub widm. Składa się z kolimatora (do równoległego ustawienia wiązki światła), siatki dyfrakcyjnej lub pryzmatu (rozszczepienie światła), oraz lunety (do obserwacji widma).
+
+\paragraph{Noniusz} to skala pomocnicza, która umożliwia dokładne odczytywanie kątów w spektrometrze, zwiększając precyzję pomiaru do ułamka stopnia.
+
+\FloatBarrier
+\newpage
+
+\section*{Zestaw ćwiczeniowy}
+
+\begin{itemize}
+    \item Lampa sodowa
+    \item Stolik spektrometryczny
+    \item Stiaki Dyfrakcyjne (oznaczone A, B, C, D, E)
+\end{itemize}
+
+\section*{Wyniki pomiarów}
+
+\begin{center}
+\[\lambda =589,60[nm]\]
+\[ \upsilon_0 = 0^\circ 41' = 0,68333^\circ\] 
+\[\Delta \alpha = 0^\circ 0' 30'' \]
+\end{center}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{6}{*}{A}
+        & \multicolumn{11}{|c|}{Prawo} \\ \cline{2-12}
+        & m &1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \cline{2-12}
+         & $\alpha$  &358$^\circ$0$'$  & 356$^\circ$17$'$ & 352$^\circ$37$'$  & 350$^\circ$25$'$& 347$^\circ$12$'$ & 344$^\circ$ 30$'$ & 341$^\circ$40$'$ & 338$^\circ$48$'$ & 336$^\circ$20$'$& 333$^\circ$0$'$\\ \cline{2-12}
+        &\multicolumn{11}{|c|}{Lewo} \\ \cline{2-12}
+        & m& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \cline{2-12}
+         & $\alpha$ & 3$^\circ$19$'$ & 6$^\circ$0$'$ & 8$^\circ$40$'$ & 11$^\circ$20$'$ & 14$^\circ$6$'$ & 17$^\circ$20$'$ & 19$^\circ$40$'$ & 22$^\circ$57$'$ & 25$^\circ$50$'$ & - \\ \hline
+    \end{tabular}
+    \caption{Pomiary kolejnych prążków dla sitaki dyfrakcyjnej A}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{6}{*}{B}
+        & \multicolumn{4}{|c|}{Prawo} \\ \cline{2-5}
+        & m& 1 & 2 & 3 \\ \cline{2-5}
+        & $\alpha$ & 354$^\circ$ 25$'$ & 347$^\circ$ 12$'$ & 340$^\circ$ 14$'$ \\ \cline{2-5}
+        & \multicolumn{4}{|c|}{Lewo} \\ \cline{2-5}
+        & m& 1 & 2 & 3 \\ \cline{2-5}
+        & $\alpha$ & 7$^\circ$ 55$'$ & 14$^\circ$ 46$'$ & 21$^\circ$ 50$'$ \\ \hline
+    \end{tabular}
+    \caption{Pomiary kolejnych prażków dla siatki dyfrakcyjnej B}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{6}{*}{C}
+        & \multicolumn{3}{|c|}{Prawo} \\ \cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\alpha$ & 347$^\circ$ 21$'$ & 332$^\circ$ 23$'$ \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo} \\ \cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\alpha$ & 14$^\circ$ 12$'$ & 28$^\circ$ 20$'$ \\ \hline
+    \end{tabular}
+    \caption{Pomiary kolejnych prążków dla siatki dyfrakcyjnej C}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{6}{*}{D}
+        & \multicolumn{3}{|c|}{Prawo} \\ \cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\alpha$ & 340$^\circ$ 3$'$ & 316$^\circ$ 5$'$ \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo} \\ \cline{2-4}
+        & m& 1 & 2 \\\cline{2-4}
+        & $\alpha$  & 21$^\circ$ 17$'$ & 45$^\circ$ 19$'$ \\ \hline
+    \end{tabular}
+     \caption{Pomiary kolejnych prążków dla siatki dyfrakcyjnej D}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{6}{*}{E}
+        & \multicolumn{3}{|c|}{Prawo} \\ \cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\alpha$ & 350$^\circ$ 50$'$ & 337$^\circ$ 54$'$ \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo} \\ \cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\alpha$ & 11$^\circ$ 25$'$ & 24$^\circ$ 40$'$ \\ \hline
+
+    \end{tabular}
+     \caption{Pomiary kolejnych prążków dla siatki dyfrakcyjnej E}
+\end{table}
+
+\FloatBarrier
+
+\section*{Obliczenia }
+
+\[ d = \frac{m \lambda}{sin(\upsilon)}\]
+\[sin(\upsilon) \not = 0 \implies \upsilon \not = 0^\circ \land \upsilon \not = 180^\circ\]
+
+$d$ - stała siatki dyfrkacyjnej
+
+$m$ - numer kolejnego zmierzonego prążka 
+
+$\alpha$- kąt zmierzony dla prążka m
+
+$\upsilon_0$- kąt prążka zerowego
+
+$\upsilon$ - kąt ugięcia dla danego prążka m, czyli kąt między $\upsilon_0$, a $\alpha$ na spektrometrze wyliczany w sposób jak poniżej: 
+\[ \forall_{x \in (0^\circ, 180^\circ)} \ \upsilon = |\upsilon_0 - \alpha |\]
+\[ \forall_{x \in (180^\circ, 360^\circ)} \ \upsilon = 360^\circ - |\upsilon_0 - \alpha |\]
+
+\begin{table}[!ht]
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{8}{*}{A}
+        & \multicolumn{11}{|c|}{Prawo} \\ \cline{2-12}
+        & m & 1 &2 &3 &4 &5 &6 &7 &8 &9 &10 \\ \cline{2-12}
+        & $\upsilon[^\circ]$  & 2,68 & 4,40 & 8,07 & 10,27 & 13,48 & 16,18 & 19,02 & 21,88 & 24,35 & 27,68 \\ \cline{2-12}
+        & $d[nm]$ & 12594,02 & 15370,37 & 12605,00 & 13232,36 & 12643,54 & 12692,68 & 12666,22 & 12655,15 & 12869,94 & 12690,91 \\ \cline{2-12}
+        & \multicolumn{11}{|c|}{Lewo} \\ \cline{2-12}
+        & m & 1 &2 &3 &4 &5 &6 &7 &8 &9 &10 \\ \cline{2-12}
+        & $\upsilon[^\circ]$  &2,63 & 5,32 & 7,98 & 10,65 & 13,42 & 16,65 & 18,98 & 22,27 & 25,15 & - \\ \cline{2-12}
+        & $d[nm]$ &12832,97 & 12726,06 & 12735,71 & 12761,28 & 12705,21 & 12346,59 & 12687,63 & 12448,08 & 12485,95 & - \\ \hline
+    \end{tabular}
+}
+\caption{Obliczenia dla kolejnych prażków dla siatki dyfrakcyjnej A}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{8}{*}{B}
+        & \multicolumn{4}{|c|}{Prawo} \\\cline{2-5}
+        & m & 1 & 2 & 3 \\ \cline{2-5}
+        & $\upsilon[^\circ]$ &  6,27 & 13,48 & 20,45 \\ \cline{2-5}
+        & $d[nm]$ &5401,44 & 5057,42 & 5062,54      \\ \cline{2-5}
+        & \multicolumn{4}{|c|}{Lewo}                \\ \cline{2-5}
+        & m & 1 & 2 & 3                             \\ \cline{2-5}
+        & $\upsilon[^\circ]$ &7,23 & 14,08 & 21,15  \\ \cline{2-5}
+        & $d[nm]$ &4682,69 & 4846,04 & 4902,29      \\ \hline
+    \end{tabular}
+    \caption{Obliczenia dla kolejnych prażków dla siatki dyfrakcyjnej B}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{8}{*}{C}
+        & \multicolumn{3}{|c|}{Prawo} \\\cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 346,67 & 331,70 \\ \cline{2-4}
+        & $d[nm]$ & 2556,63 & 2487,30         \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo}                \\ \cline{2-4}
+        & m & 1 & 2                            \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 13,52 & 27,65  \\ \cline{2-4}
+        & $d[nm]$ & 2522,59 & 2541,00  \\ \hline
+    \end{tabular}
+    \caption{Obliczenia dla kolejnych prażków dla siatki dyfrakcyjnej C}
+\end{table}     
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{8}{*}{D}
+        & \multicolumn{3}{|c|}{Prawo} \\\cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 20,63 & 44,60\\ \cline{2-4}
+        & $d[nm]$ & 1673,16 & 1679,41     \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo}                \\ \cline{2-4}
+        & m & 1 & 2                            \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 20,63 & 44,60  \\ \cline{2-4}
+        & $d[nm]$ & 1673,16 & 1679,41  \\ \hline
+    \end{tabular}
+    \caption{Obliczenia dla kolejnych prażków dla siatki dyfrakcyjnej D}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multirow{8}{*}{E}
+        & \multicolumn{3}{|c|}{Prawo} \\\cline{2-4}
+        & m & 1 & 2 \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 9,85 & 22,78  \\ \cline{2-4}
+        & $d[nm]$ & 3446,56 & 3045,08       \\ \cline{2-4}
+        & \multicolumn{3}{|c|}{Lewo}                \\ \cline{2-4}
+        & m & 1 & 2                            \\ \cline{2-4}
+        & $\upsilon[^\circ]$ & 10,73 & 23,98  \\ \cline{2-4}
+        & $d[nm]$ & 3165,84 & 2901,07  \\ \hline
+    \end{tabular}
+    \caption{Obliczenia dla kolejnych prażków dla siatki dyfrakcyjnej E}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+        Siatka Dyfrakcyjna & n & $x_s$ & $\sigma$& $T_{(n, 0.68)}$& $\sigma \cdot T_{(n 
+, 0.68)}$ &$\sigma_s$ \\ \hline
+        A & 19 & 12828,93 & 653,575 & 1,027 & 671,218 &  68,43 \\ \hline
+        B & 6 & 4992,07 & 268,70 & 1,11 & 298,26 & 121,76 \\ \hline
+        C & 4 & 2526,88 & 17,023 & 1,20 & 20,43 &  10,21 \\ \hline
+        D & 4 & 1676,69 & 1,29 & 1,20 & 1,55 & 0,78 \\ \hline
+        E & 4 & 3139,64 & 140,36 & 1,20 & 168,43 & 84,26 \\ \hline
+    \end{tabular}
+    \caption{Wyliczenia statystyczne, gdzie: $n$ - liczba stopni swobody, $x_s$ - śr. aryt., $\sigma$ - odch. stand.,$T_{(n 
+, 0.68)}$  współ. Studneta Fishera na poziomie ufnośći 68\% dla n stopni swobody, $\sigma_s$ - odch. stand. śr. aryt. wyliczane z  $\frac{\sigma * T_{(n 
+, 0.68)}}{\sqrt{n}} $ }
+\end{table}
+
+\FloatBarrier
+
+\section*{Przykład Obliczeń}
+
+dla siatki dyfrakcyjnej A, prążka numer 1 na prawo od prążka zerowego. 
+
+\[\alpha = 358^\circ0'\]
+\[m = 1\]
+\[\lambda =589,60[nm]\]
+\[\upsilon_0 = 0^\circ 41'\]
+
+\[ \upsilon = 360^\circ - |358^\circ - 0^\circ41'| = 2^\circ 41' \approx 2,68^\circ\]
+
+\[ d = \frac{m \lambda}{sin(\upsilon)} = \frac{1\cdot 589,60}{sin(2,68^\circ)} = \frac{589,60}{0,046816} \approx 12594,02[nm]\]
+
+\FloatBarrier
+
+\section*{Wnioski}
+
+
+Na podstawie przeprowadzonych pomiarów kątów ugięcia kolejnych prążków światła po przejściu przez siatkę dyfrakcyjną oraz wykonanych obliczeń stałej siatki i analizy statystycznej można wyciągnąć następujące wnioski. Wyniki eksperymentu potwierdziły zależność kąta ugięcia od długości fali oraz rzędu widma, zgodnie z równaniem dyfrakcji $d \cdot sin(\alpha)=m \lambda$. Wyznaczone stałe siatki dyfrakcyjnej dla kolejnych prążków były zbliżone, co świadczy o poprawności wykonanych pomiarów i obliczeń. Obliczone odchylenia standardowe wskazały na dobrą powtarzalność wyników, jednak pewne różnice między wynikami poszczególnych prążków mogą wynikać z niedokładności pomiarowych, takich jak nieidealne ustawienie kątomierza czy błędy odczytu. Eksperyment wykazał, że zastosowanie siatki dyfrakcyjnej jest skuteczne w precyzyjnym badaniu zjawiska dyfrakcji światła oraz wyznaczaniu charakterystycznych parametrów optycznych, takich jak długość fali(gdy znamy stałą siatki dyfrakcyjnej). Można więc uznać poprawność przeprowadzonego badania oraz zastosowanych metod obliczeniowych.
+
+\FloatBarrier
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{c|c}
+         siatka \\dyfrakcyjna & $d$ \\\hline
+         A & $(12828,93 \pm 68)[nm]$\\ \hline
+         B & $(4992,07  \pm 122)[nm]$\\ \hline
+         C & $(2526,88 \pm 10)[nm]$\\ \hline
+         D & $(1676,69 \pm 0,78)[nm]$\\ \hline
+         E & $(3139,64 \pm 84)[nm]$\\
+    \end{tabular}
+    \caption{Wyliczone stałe $d$ badanych siatek dyfrakcyjnych}
+    \label{tab:my_label}
+\end{table}
+
+\FloatBarrier
+
+\section*{Bibliografia}
+\begin{itemize}
+    \item Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008
+    \item Wikipedia Wolna Encyklopedia, Zasada Huygensa: https://pl.wikipedia.org/wiki/Zasada\_Huygensa
+    \item  Tablica współczynników Studneta Fishera: https://www.ifiz.umk.pl/panel/wp-content/uploads/wspSF5cyf.pdf
+    \item Wikipedia Wolna Encyklopedia, Siatka Dyfrakcyjna: https://pl.wikipedia.org/wiki/Siatka\_dyfrakcyjna
+\end{itemize}
+\end{document}

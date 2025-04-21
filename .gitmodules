@@ -1,0 +1,15 @@
+[submodule "sem2/EAN/newthonMethodApp"]
+	path = sem2/EAN/newthonMethodApp
+	url = https://github.com/Seweryn-Was/NewtonMethodApp.git
+[submodule "sem2/PNP/Chess-OpenGL"]
+	path = sem2/PNP/Chess-OpenGL
+	url = https://github.com/Seweryn-Was/Chess-OpenGL.git
+[submodule "sem3/OK/PCmax-problem"]
+	path = sem3/OK/PCmax-problem
+	url = https://github.com/Seweryn-Was/PCmax-problem.git
+[submodule "sem3/OOP/OOP-project"]
+	path = sem3/OOP/OOP-project
+	url = https://github.com/Seweryn-Was/OOP-project.git
+[submodule "sem4/ComputerGraphicAndVisualization/OpenGL-project"]
+	path = sem4/ComputerGraphicAndVisualization/OpenGL-project
+	url = https://github.com/Seweryn-Was/OpenGL-Gizmos.git

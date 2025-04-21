@@ -1,0 +1,541 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}     % Use T1 font encoding for Polish characters
+\usepackage[polish]{babel}   % Load the Polish language
+\usepackage{geometry}
+\usepackage{amsthm}  % For theorem-like environments
+\usepackage{lipsum}  
+\usepackage{fancyhdr}
+\usepackage{cmbright}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{placeins}
+ 
+\newtheorem{definition}{Definition}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ bottom=30mm,          % Bottom margin to ensure footer visibility
+ footskip=15mm  
+ }
+
+
+ \title{Wyznaczanie ogniskowych soczewek
+ze wzoru soczewkowego oraz metodą Bessela
+}
+\author{Seweryn Wasilewski}
+\date{Październik 2024}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  %\fancyfoot[R]{\includegraphics[width=2cm]{PP_logo.png}}
+  \fancyfoot[L]{\today}
+  \fancyfoot[R]{\thepage}
+  \fancyhead[L]{Pracownia Fizyczna I }
+  \fancyhead[R]{\theauthor}
+}
+
+\pagestyle{fancy}
+\pagestyle{plain}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\begin{document}
+
+\maketitle
+
+\noindent\begin{tabular}{@{}ll}
+    Student & \theauthor\\
+     Nr Albumu &  160128\\
+    Kierunek & Inforamtyka\\
+    Wydział & Wydział Informatyki i Teleinforamtyki\\
+    Ćwiczenie & 302\\
+\end{tabular}
+
+\section*{Wstęp Teoretyczny}
+
+\paragraph{Soczewki cienkie i grube:}
+Soczewką nazywamy ciało przeźroczyste ograniczone dwiema sferycznymi powierzchniami. Soczewkę nazywamy cięnką, jeżeli jej grubość jest mała w porównaniu z jej promieniem krzywizny, a grubą, gdy grubość jest większa w porównaniu z jej krzywizną. Załamanie światła to proces, w którym fala świetlna zmienia kierunek, gdy przechodzi z jednego ośrodka do drugiego o innym współczynniku załamania. Soczewka wykorzystuje to zjawisko, aby zmieniać tor promieni świetlnych i formować obraz. Rozróżniamy soczewki skupiające i rozpraszające(Rysunek \ref{fig:soczewki}). 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{soczewki.png}
+    \caption{skupianie promieni w ognisku soczewki skupiającej(po lewewj) i rozpraszającej(po prawej). Źródło: Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 150 Rys. 37.1. }
+    \label{fig:soczewki}
+\end{figure}
+
+\paragraph{Odwrotność ogniskowej} nazywamy \emph{zdolnością skupiającą} soczewki D:
+
+\begin{equation}
+D = \frac{1}{f}
+\label{eq:diopters2}
+\end{equation}
+
+,gdzie: 
+
+\renewcommand{\labelitemi}{--}   % First level: dash
+\begin{itemize}
+    \item $D$ zdolnością skupiającą wyrażana w dioptraich o wymiarze $m^{-1}$,
+    \item $f$ ogniskowa obiektywu, mierzona w metrach.
+\end{itemize}
+
+\paragraph{Oś optyczna:}prosta przechodząca przez środki krzywizn elementów układu optycznego, pokrywająca się z osią symetrii tych elementów.
+
+\paragraph{Środek optyczny:}nazywamy punkt położony na jej osi optycznej i mający tę własnośd, że promienie przechodzące przez niego mają ten sam kierunek przed wejściem do soczewki i po wyjściu z niej
+
+\paragraph{Ognisko i ogniskowa}Punkt, w którym przecinają się promienie (lub ich przedłużenia) wiązki równoległej światła po przejściu przez soczewkę lub po odbiciu się od zwierciadła nosi nazwę ogniska. Odległość ogniska od soczewki lub zwierciadła nazywamy ogniskową (Rysunek \ref{fig:ogniskowa}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ognisko_ogniskowa.png}
+    \caption{A - Ognisko, f - ogniskowa. Źródło: Politechnika Gdańska Pracownia Fizyczna ćwiczenie 50 rys. 50.2 (https://pg.edu.pl/files/ftims/2021-03/cw\_50.pdf)}
+    \label{fig:ogniskowa}
+\end{figure}
+
+\paragraph{Równanie soczewkowe} jest równaniem określającym zależność pomiędzy odległością przedmiotu od soczewki (punkt P), a odległością jego obrazu otrzymanego w tej soczewce (punkt O)
+
+\begin{equation}
+\frac{1}{f} = \frac{1}{o} + \frac{1}{p}
+\label{eq:diopters}
+\end{equation}
+
+,gdzie:
+\begin{itemize}
+    \item $o$ jest odległością obrazu od soczewki,
+    \item $p$ jest odległością przedmiotu od soczewki, 
+    \item $f$ jest ogniskową soczewki.
+\end{itemize}
+
+Równanie to można stosować, gdy:
+
+\renewcommand{\labelitemi}{\textbullet}
+\begin{itemize}
+    \item promienie wybiegające z punktu P tworzą mały kąt z osią optyczną,
+    \item soczewka jest soczewką cienką
+    \item $f$ jest ogniskową soczewki.
+\end{itemize}
+
+W stosunku do ogległości $p$, $o$, $R_1$, $R_2$ oraz f obowiązuje umowa określająca ich znaki(Rysunek \ref{fig:konstrukcja}:
+
+\begin{itemize}
+    \item $p$ jest zawsze dodatnie 
+    \item $o$, $R$ oraz $f$ są dodatnie, gdy leżą po przeciwnej stronie soczewki niż przedmiot
+    \item $R$ oraz $f$ są ujemne, gdy leżą po stronie przedmiotu
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{konstrukcja_obrazu.png}
+    \caption{Konstrukcja Obrazu w soczewce skupiającej (lewa soczewka) i rozpraszająca (prawa soczewka). Źródło: Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 151 Rys. 37.2.}
+    \label{fig:konstrukcja}
+\end{figure}
+
+\paragraph{Metoda Bessela}to klasyczna metoda optyczna stosowana do wyznaczania ogniskowej soczewki przy użyciu prostego układu optycznego. Charakteryzuje się tym, że pozwala na dokładne określenie ogniskowej soczewki bez konieczności bezpośredniego pomiaru odległości ogniska od soczewki. Przy stałej odległości $l$ przedmiotu od ekranu obraz powstaje w odległości $o$ od obrazu oraz 
+
+\begin{equation}
+    o'=p
+    \label{eq:op}
+\end{equation}
+od soczewki. W jednym położeniu obraz jest pomniejszony a w drugim powiększony w stosunku do przedmiotu na podstawie równania (\ref{eq:diopters}) możemy napisać układ równań:
+
+\begin{align}
+    l=o+p \nonumber\\
+    e=o-p \nonumber
+\end{align}
+po wyliczeniu z tych równań $o$ oraz $p$ i wstawiamy uzyskane wartości do równania (\ref{eq:diopters}). Po przekształceniach uzyskujemy:
+
+\begin{equation}
+    f=\frac{l^2 - e^2}{4l} \label{eq:bessela}
+\end{equation}
+Teraz by wyznaczyć ogniskową soczewki lub układu soczewek z powyższego równania wystarczy zmierzyć odległości przedmiotu od ekranu $l$ i odległość $e$ między dwoma położeniami soczewki, dla których obraz na ekranie jest ostry.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{image.png}
+    \caption{wyznaczanie ogniskowej soczewki metodą Bessela. Źródło: Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008 str. 153 Rys. 37.4.}
+    \label{fig:bessel}
+\end{figure}
+
+\paragraph{Ogniskowa układu} składająca się z dwóch soczewek cienkich o ogniskowych $f_1$, $f_2$ we wzajemnej odległości $d$ można oobliczyć z wzoru: 
+
+\begin{equation}
+    \frac{1}{f} = \frac{1}{f_1} + \frac{1}{f_2} - \frac{d}{f_1 f_2}
+    \label{eq:ogniskowa}
+\end{equation}
+
+
+\newpage
+\section*{Zestaw ćwiczeniowy}
+
+\begin{itemize}
+    \item Ława optyczna
+    \item Świecący obraz
+    \item Soczewki w uchwytach \begin{itemize}
+        \item skupiające: A, B, C
+        \item rozpraszające: 1, 2, 3
+    \end{itemize}
+    \item Ekran
+\end{itemize}
+
+\section*{Objaśnienie symboli używanych w pomiarach i wyliczeniach}
+\begin{itemize}
+    \item e - odległość między dwoma pozycjami soczewki dającymi ostr obraz, 
+    \item l - odległość między ekranem, a przedmiotem, 
+    \item p, p' - odległość soczewki od przedmiotu w której obraz jest ostry(p - bliżej przedmiotu, p' bliżej ekranu), 
+    \item o, o' - odległość soczewki od ekranu w której obraz jest ostry odpowiednio dla p i p', 
+    \item $f_1$ oraz $f_2$ jest ogniskową obliczną z równania soczewkowego (\ref{eq:diopters}). Tyle, że zostały wyliczone dla innych położeń. $f_1$ został obliczony dla $p$, natomist $f_2$ dla $p'$.
+    \item $f_{bessela}$ zostały obliczone z równania (\ref{eq:bessela}). 
+    \item $\Delta x$ - jest błędem symbolu x, gdzie x może być jednym z powyższych symboli,
+    \item $f_x$ - jest wyliczoną ogniskową, gdzie x jest oznaczeniem soczewki lub układu soczewek
+    
+\end{itemize}
+
+
+\section*{Wyniki Pomiarów}
+
+Wyniki zostały zapisane w [cm]. 
+
+
+Odległość między ekranem, a przedmiotem: 
+\[l = 100[cm] \nonumber\]
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|l|l|}
+    \hline
+         soczewka & \multicolumn{2}{c|}{A} & \multicolumn{2}{c|}{B} & \multicolumn{2}{c|}{C} \\ \hline
+         nr. & p & p' & p & p' & p & p' \\ \hline
+        1 & 11,35 & 89,35 & 17,50 & 83,10 & 28,30 & 72,25 \\ \hline
+        2 & 11,35 & 89,50 & 17,30 & 82,90 & 28,35 & 72,75 \\ \hline
+        3 & 11,20 & 89,40 & 17,85 & 83,10 & 28,15 & 71,90 \\ \hline
+        4 & 11,30 & 89,40 & 17,45 & 82,95 & 28,20 & 72,00 \\ \hline
+        5 & 11,25 & 89,45 & 17,50 & 82,95 & 28,25 & 72,35 \\ \hline
+        śr. aryt.  & 11,29 & 89,42 & 17,52 & 83,00 & 28,25 & 72,25 \\ \hline
+        odch. stand. & 0,065 & 0,057 & 0,202 & 0,094 & 0,079 & 0,334 \\ \hline
+    \end{tabular}
+    \caption{Zmierzone pozycje soczewek skupiających o ostrym obrazie na ekranie}
+    \label{tab:Pomiar_1}
+\end{table}
+
+Odległość między soczewkami w układzie:
+\[d = 6[cm]\]
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|l|l|}
+    \hline
+        układ soczewek& \multicolumn{2}{c|}{A+1} & \multicolumn{2}{c|}{A+2} & \multicolumn{2}{c|}{A+3} \\ \hline
+         nr. & p & p' & p & p' & p & p' \\ \hline
+        1 & 24,85 & 89,90 & 18,20 & 91,45 & 16,75 & 91,85 \\ \hline
+        2 & 24,60 & 90,00 & 18,35 & 91,40 & 16,60 & 91,65 \\ \hline
+        3 & 24,85 & 89,35 & 18,10 & 91,35 & 16,60 & 91,70 \\ \hline
+        4 & 24,60 & 89,80 & 18,15 & 91,35 & 16,70 & 91,80 \\ \hline
+        5 & 24,80 & 89,40 & 18,15 & 91,10 & 16,70 & 91,80 \\ \hline
+         śr. aryt.  & 24,74 & 89,69 & 18,19 & 91,33 & 16,67 & 91,76 \\ \hline
+         odch. stand. & 0,129 & 0,297 & 0,096 & 0,135 & 0,067 & 0,082 \\ \hline
+    \end{tabular}
+       \caption{Zmierzone pozycje układów soczewek (skupiająca + rozpraszająca) o ostrym obrazie na ekranie}
+    \label{tab:Pomiar_2}
+\end{table}
+
+$p$ oraz $p'$ są odległościami od przedmiotu do uchwytu na soczewki. Patrz rysunek \ref{fig:bessel}. 
+
+\newpage
+
+\section*{Obliczenia}
+
+Obliczenia zostały wykonane oraz zapisane w [cm]. \\
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multicolumn{10}{|c|}{A} \\ \hline
+         &p & o & p' & o' & $f_1$ & $f_2$ & e & l & $f_{bessela}$ \\ \hline
+        1&11,35 & 88,65 & 89,35 & 10,65 & 10,061775 & 9,515775 & 78,00 & \multirow{5}{*}{100} & 9,79 \\ \cline{1-8} \cline{10-10}
+        2&11,35 & 88,65 & 89,50 & 10,50 & 10,061775 & 9,3975 & 78,15 &  & 9,73144375 \\ \cline{1-8} \cline{10-10}
+        3&11,20 & 88,80 & 89,40 & 10,60 & 9,9456 & 9,4764 & 78,20 &  & 9,7119 \\ \cline{1-8} \cline{10-10}
+        4&11,30 & 88,70 & 89,40 & 10,60 & 10,0231 & 9,4764 & 78,10 &  & 9,750975 \\\cline{1-8} \cline{10-10}
+        5&11,25 & 88,75 & 89,45 & 10,55 & 9,984375 & 9,436975 & 78,20 &  & 9,7119 \\ \hline
+    \end{tabular}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+        &$f_1$ & $f_2$ & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 10,015325 & 9,46061 & 9,73924375 \\ \hline
+        odch. Stand & 0,050485477 & 0,044953617 & 0,032672697 \\ \hline
+        $\Delta f$ & 0,033236426 & 0,029064411 & 0,016823974 \\ \hline
+    \end{tabular}
+
+    \caption{Wyliczenia ogniskowej dla soczewki skupiającej A}
+    \label{tab:Wyl_1}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multicolumn{10}{|c|}{B} \\ \hline
+         & p & o & p' & o' & $f_1$ & $f_2$ & e & l & $f_{bessela}$ \\ \hline
+        1 & 17,50 & 82,50 & 83,10 & 16,90 & 14,4375 & 14,0439 & 65,60 & \multirow{5}{*}{100} & 14,2416 \\ \cline{1-8} \cline{10-10}
+        2 & 17,30 & 82,70 & 82,90 & 17,10 & 14,3071 & 14,1759 & 65,60 &  & 14,2416 \\ \cline{1-8} \cline{10-10}
+        3 & 17,85 & 82,15 & 83,10 & 16,90 & 14,663775 & 14,0439 & 65,25 &  & 14,35609375 \\ \cline{1-8} \cline{10-10}
+        4 & 17,45 & 82,55 & 82,95 & 17,05 & 14,404975 & 14,142975 & 65,50 &  & 14,274375 \\ \cline{1-8} \cline{10-10}
+        5 & 17,50 & 82,50 & 82,95 & 17,05 & 14,4375 & 14,142975 & 65,45 &  & 14,29074375 \\ \hline
+    \end{tabular}
+
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+        &$f_1$ & $f_2$ & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 14,45017 & 14,10993 & 14,2808825 \\ \hline
+        odch. Stand & 0,130824087 & 0,061757402 & 0,04712365 \\ \hline
+        $\Delta f$ & 0,102916179 & 0,047689622 & 0,013965212 \\ \hline
+    \end{tabular}
+   \caption{Wyliczenia ogniskowej dla soczewki skupiającej B}
+    \label{tab:Wyl_2}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+        \multicolumn{10}{|c|}{C} \\ \hline
+         & p & o & p' & o' & $f_1$ & $f_2$ & e & l & $f_{bessela}$ \\ \hline
+        1 & 28,30 & 71,70 & 72,25 & 27,75 & 20,2911 & 20,049375 & 43,95 & \multirow{5}{*}{100} & 20,17099375 \\ \cline{1-8} \cline{10-10}
+        2 & 28,35 & 71,65 & 72,75 & 27,25 & 20,312775 & 19,824375 & 44,40 &  & 20,0716 \\ \cline{1-8} \cline{10-10}
+        3 & 28,15 & 71,85 & 71,90 & 28,10 & 20,225775 & 20,2039 & 43,75 &  & 20,21484375 \\ \cline{1-8} \cline{10-10}
+        4 & 28,20 & 71,80 & 72,00 & 28,00 & 20,2476 & 20,16 & 43,80 &  & 20,2039 \\ \cline{1-8} \cline{10-10}
+        5 & 28,25 & 71,75 & 72,35 & 27,65 & 20,269375 & 20,004775 & 44,10 &  & 20,137975 \\ \hline
+    \end{tabular}
+
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+            &$f_1$ & $f_2$ & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 20,269325 & 20,048485 & 20,1598625 \\ \hline
+        odch. Stand & 0,034389801 & 0,148934605 & 0,057782946 \\ \hline
+        $\Delta f$ & 0,040305087 & 0,170047346 & 0,009384077 \\ \hline
+    \end{tabular}
+       \caption{Wyliczenia ogniskowej dla soczewki skupiającej C}
+    \label{tab:Wyl_3}
+\end{table}
+
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+        \multicolumn{4}{|c|}{A+1}\\\hline
+        &e & l & $f_{bessela}$ \\ \hline
+        1&65,05 & \multirow{5}{*}{100}& 14,42124375 \\ \cline{1-2} \cline{4-4}
+        2&65,40 &  & 14,3071\\ \cline{1-2} \cline{4-4}
+        3&64,50 &  & 14,599375 \\ \cline{1-2} \cline{4-4}
+        4&65,20 &  & 14,3724 \\ \cline{1-2} \cline{4-4}
+        5&64,60 & & 14,5671 \\ \hline
+    \end{tabular}
+    \begin{tabular}{|c|c|}
+    \hline
+            \multicolumn{2}{|c|}{A+1}\\\hline
+        & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 14,45344375 \\ \hline
+        Odch. Stand. & 0,125732947 \\ \hline
+        $\Delta f$ & 0,064265434 \\ \hline
+    \end{tabular}
+        \caption{Wyliczenia ogniskowej dla układu soczewek skupiającej A i rozpraszającej 1}
+    \label{tab:Wyl_4}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+            \multicolumn{4}{|c|}{A+2}\\\hline
+        & e & l & $f_{bessela}$ \\ \hline
+        1 & 73,25 & \multirow{5}{*}{100} & 11,58609375 \\ \cline{1-2} \cline{4-4}
+        2 & 73,05 &  & 11,65924375 \\ \cline{1-2} \cline{4-4}
+        3 & 73,25 &  & 11,58609375 \\ \cline{1-2} \cline{4-4}
+        4 & 73,20 &  & 11,6044 \\ \cline{1-2} \cline{4-4}
+        5 & 72,95 &  & 11,69574375 \\ \hline
+    \end{tabular}
+    \begin{tabular}{|c|c|}
+    \hline
+            \multicolumn{2}{|c|}{A+2}\\\hline
+        & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 11,626315 \\ \hline
+        Odch. Stand. & 0,049041867 \\ \hline
+        $\Delta f$ & 0,072208852 \\ \hline
+    \end{tabular}
+            \caption{Wyliczenia ogniskowej dla układu soczewek skupiającej A i rozpraszającej 2}
+    \label{tab:Wyl_5}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+            \multicolumn{4}{|c|}{A+3}\\\hline
+        & e & l & $f_{bessela}$ \\ \hline
+        1 & 75,10 & \multirow{5}{*}{100} & 10,89997500 \\ \cline{1-2} \cline{4-4}
+        2 & 75,05 &  & 10,91874375 \\ \cline{1-2} \cline{4-4}
+        3 & 75,10 &  & 10,89997500 \\ \cline{1-2} \cline{4-4}
+        4 & 75,10 &  & 10,89997500 \\ \cline{1-2} \cline{4-4}
+        5 & 75,10 &  & 10,89997500 \\ \hline
+    \end{tabular}
+    \begin{tabular}{|c|c|}
+    \hline
+            \multicolumn{2}{|c|}{A+3}\\\hline
+        & $f_{bessela}$ \\ \hline
+        śr. Aryt. & 10,90372875 \\ \hline
+        Odch. Stand. & 0,00839364 \\ \hline
+        $\Delta f$ & 0,074134026 \\ \hline
+    \end{tabular}
+        \caption{Wyliczenia ogniskowej dla układu soczewek skupiającej A i rozpraszającej 3}
+    \label{tab:Wyl_6}
+\end{table}
+
+\FloatBarrier
+
+\textbf{Błędy zachodzące przy wyznaczaniu ogniskowych soczewek}\\
+Korzystając z wzoru na błąd maksymalny:
+
+\[z = h(x_1, x_2, ...)\]
+
+\[ \Delta z = |\frac{\partial h}{\partial x_1} \Delta x_2| + |\frac{\partial h}{\partial x_2} \Delta x_2| + ...\]
+,można wyznaczyć wzór na błąd ogniskowej:
+\begin{itemize}
+    \item liczonej równaniem soczewkowym dla obu pozycji soczewki p i p':
+\[ \Delta f_{socz} = |\frac{\partial f}{\partial p} \Delta p| + |\frac{\partial f}{\partial o} \Delta o| = \frac{o^2}{o^2+p^2}\Delta p + \frac{p^2}{o^2+p^2}\Delta o \]
+,gdzie f jest równaniem soczewkowym (\ref{eq:diopters})
+
+\item liczonej równaniem metody Bessela: \[ \Delta f_{bessela} = |\frac{\partial f}{\partial l} \Delta l| + |\frac{\partial f}{\partial e} \Delta e| = \frac{e^2 + l^2}{4l^2} \Delta l + \frac{e}{2l}\Delta e\] 
+,gdzie f jest równaniem metody Bessela (\ref{eq:bessela})
+
+\item liczonej z równania dla układu soczewek (\ref{eq:ogniskowa}) \[ \Delta f_i = |\frac{\partial f}{\partial f_A} \Delta f_A| + |\frac{\partial f}{\partial d} \Delta d| + |\frac{\partial f}{\partial f_{A+i}} \Delta f_{A+i}|\]
+\[ \Delta f_i = |\frac{f_{A+i}(d-f_{A+i})}{(f_A+i - f_A)^2} \Delta f_A| + |\frac{f_{A+i}}{f_{A+i} -f_A} \Delta f_{A+i} | + |\frac{f_A (f_A -d)}{(f_{A+i} - f_A)^2} \Delta f_{A+i}|\]
+, gdzie 
+\begin{itemize}
+    \item $f_i$ jest soczewka rozpraszajacą której wartość ogniskowej jest liczona,
+    \item  $f$ jest przekształconym równaniem (\ref{eq:ogniskowa}) do postaci $f_{i} = \frac{f_{A+i}(d-f_A)}{f_{A+i} - f_A}$,
+    \item $f_{A+i}$ jest ogniskową ukłądu soczewki skupiającej A oraz rozpraszającej $i$,
+    \item  $f_A$ jest ogniskową soczewki skupiającej A.
+\end{itemize} 
+\end{itemize}
+
+\section*{Przykład Obliczeń ogniskowej soczewki skupiającej}
+
+dla soczewki A pomiaru nr. 1
+
+\textbf{wzór soczewkowy (\ref{eq:diopters})}
+
+Dane: 
+
+\begin{equation}
+    p = 11,35[cm]\nonumber\\
+\end{equation}
+\begin{equation}
+    l = 100[cm] \nonumber\\
+\end{equation}
+
+Obliczenia:
+
+\[o = l - p = 100,00 - 11,35 = 88,65[cm] \nonumber\]
+\[\frac{1}{f} = \frac{1}{o}+\frac{1}{p} = \frac{1}{88,65} + \frac{1}{11,35} = 0,0993860427210905[cm^{-1}] \nonumber\]
+\[f = \frac{1}{0,0993860427210905} = 10,061775 [cm] \nonumber\]
+
+\textbf{metoda Bessela (\ref{eq:bessela})}
+
+Dane: 
+
+\[p = 11,35[cm]\nonumber\]
+\[p' = 89,35[cm]\nonumber\]
+\[l = 100[cm] \nonumber\]
+
+Obliczenia: 
+\[e = p' - p = 89,35 - 11,35 = 78,00[cm]\]
+\[f = \frac{l^2-e^2}{4l} = \frac{100^2 - 78,00^2}{4 \cdot 100} = \frac{3916}{400} = 9,79[cm]\]
+
+\paragraph{Wyliczanie ogniskowej soczewki rozpraszającej z równania (\ref{eq:ogniskowa}):}
+
+
+
+\begin{itemize}
+    \item nr. 1
+        \[f_{A+1} = 14,45344375 [cm]\]
+        \[f_A = 9.73839291667 [cm]\]
+        \[d = 6 [cm]\] 
+        \\
+        \[\frac{1}{f_{A+1}} = \frac{1}{f_A} + \frac{1}{f_1} - \frac{d}{f_A \cdot f_1 }\]
+        \[f_{1} = \frac{f_{A+1}(d-f_A)}{f_{A+1} - f_A}\]
+        \[\frac{1}{f_1} = -0,087262992[cm^{-1}]\]
+        \[f_1 = -11,45961171[cm]\]
+        \[\Delta f_1 =  0,203936935377946\]
+
+    \item nr. 2
+        \[f_{A+2} = 11,626315 [cm]\]
+        \[f_A = 9.73839291667 [cm]\]
+        \[d = 6 [cm]\] 
+        \\
+        \[\frac{1}{f_{A+2}} = \frac{1}{f_A} + \frac{1}{f_2} - \frac{d}{f_A \cdot f_2 }\]
+        \[f_{2} = \frac{f_{A+2}(d-f_A)}{f_{A+2} - f_A}\]
+        \[\frac{1}{f_2} = -0,043436721 [cm^{-1}]\]
+        \[f_2 = -23,02199547[cm]\]
+        \[\Delta f_2 = 1,05981750570769\]
+        
+    \item nr. 3
+        \[f_{A+3} = 10,90372875 [cm]\]
+        \[f_A = 9.73839291667 [cm]\]
+        \[d = 6 [cm]\] 
+        \\
+        \[\frac{1}{f_{A+3}} = \frac{1}{f_A} + \frac{1}{f_3} - \frac{d}{f_A \cdot f_3 }\]
+        \[f_{3} = \frac{f_{A+3}(d-f_A)}{f_{A+3} - f_A}\]
+        \[\frac{1}{f_3} =-0,028588483[cm^{-1}]\]
+        \[f_3 = -34,97912032 [cm]\]
+         \[\Delta f_3 = 2,6730498469569\]
+\end{itemize}
+
+\FloatBarrier
+
+\section*{Wnioski}
+Wnioski z przeprowadzonych pomiarów wykazały zgodność wyników obliczeń ogniskowej soczewek przy użyciu metody Bessela oraz równania soczewkowego. Średnie wartości ogniskowej $f_1$, $f_2$ oraz $f_{bessela}$ dla każdej soczewki skupiającej są zbliżone, a niskie odchylenia standardowe wskazują na poprawność i wiarygodność pomiarów. Różnice między metodami są niewielkie i mogą wynikać z błędów związanych z ustawieniem ostrości obrazu, ograniczeniami dokładności przyrządów, błędem drubym lub też niepoprawnie ustawioną ostrością obrazu. Obie metody - równanie soczewkowe, metoda Bessela - dobrze sprawdziły się w warunkach laboratoryjnych, a wyniki są zgodne z teorią optyki soczewek. Łączna niepewność była niska, co sugeruje, że procedura pomiarowa była przeprowadzona poprawnie. Wartości ogniskowej dla soczewek rozpraszających wyliczone z wzoru na ogniskową układu są również wiarygodne, a wartości błędów wynikają z nałożonych na siebie błędów ognsikowych soczewek, które to wynikają z błędów pomaiarowych. Ostatecznie porównójąc metodę Bessela i równania soczewkowego, metoda Bessela daje większą pewność wyliczenia dokładniejszej ogniskowej soczewki. 
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{c|c}
+        Soczewka & Ogniskowa $f$\\ \hline
+         A & $9.80 \pm 0,017[cm]$\\ \hline
+         B & $14.30 \pm 0,014[cm]$  \\ \hline
+         C & $20.20 \pm 0,001[cm]$\\ \hline
+         1 & $-11,50 \pm 0,20[cm]$ \\ \hline
+         2 & $-23,03 \pm 1,06[cm]$ \\ \hline
+         3 &  $-35,00 \pm 2,67[cm]$ \\
+    \end{tabular}
+    \caption{Uzyskane ogniskowe badanych soczewek }
+    \label{tab:wynik}
+\end{table}
+
+\FloatBarrier
+
+\section*{Bibliografia}
+\begin{enumerate}
+    \item Krzysztof Łapsa, Ćwiczenia laboratoryjne z fizyki, Wydawnictwo Politechniki Poznańskiej, Poznań 2008,
+    \item Wikipedia Wolna Encyklopedia równanie soczewkowe \textit{https://pl.wikipedia.org/wiki/Równanie\_soczewki}
+    \item Wikipedia Wolna Encyklopedia soczewka \textit{https://pl.wikipedia.org/wiki/Soczewka}
+\end{enumerate}
+
+\end{document}
